@@ -23,11 +23,20 @@ async function downloadGitFolder(GitURL: string, branchName?: string, folderPath
     await $`git checkout ${branchName}`;
 
     await fs.remove(path.join(tempFolder, '.git'));
-    await fs.copy(
-        folderPath ? path.join(tempFolder, folderPath) : tempFolder,
-        targetFolder,
-        { overwrite: true }
-    );
+    
+    const sourceFolder = folderPath ? path.join(tempFolder, folderPath) : tempFolder;
+    
+    // Check if source is a file or directory
+    const sourceStat = await fs.stat(sourceFolder);
+    
+    if (sourceStat.isFile()) {
+        // If it's a file, copy it directly to target directory with same name
+        const fileName = path.basename(sourceFolder);
+        await fs.copy(sourceFolder, path.join(targetFolder, fileName), { overwrite: true });
+    } else {
+        // If it's a directory, copy contents to target directory
+        await fs.copy(sourceFolder, targetFolder, { overwrite: true });
+    }
 }
 
 async function removeSubmodule(submodulePath?: string) {
