@@ -1,14 +1,15 @@
 {
-    "name": "get-git-folder",
+    "name": "git-utility",
     "version": "0.1.2",
     "license": "LGPL-3.0",
     "author": "shiy2008@gmail.com",
-    "description": "A file downloader based on Git CLI",
+    "description": "A Git utility CLI tool with file download and submodule management capabilities",
     "keywords": [
-        "file",
-        "download",
         "git",
-        "cli"
+        "utility",
+        "cli",
+        "download",
+        "submodule"
     ],
     "homepage": "https://github.com/idea2app/get-git-folder#readme",
     "repository": {
@@ -19,7 +20,9 @@
         "url": "https://github.com/idea2app/get-git-folder/issues"
     },
     "type": "module",
-    "bin": "dist/index.js",
+    "bin": {
+        "xgit": "dist/index.js"
+    },
     "dependencies": {
         "commander-jsx": "^0.6.9",
         "zx": "^7.2.3"
