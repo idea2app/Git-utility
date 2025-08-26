@@ -34,19 +34,15 @@ async function downloadGitFolder(
         ? path.join(tempFolder, folderOrFilePath)
         : tempFolder;
 
-    // Check if source is a file or directory
     const sourceStat = await fs.stat(sourcePath);
 
     if (sourceStat.isFile()) {
-        // If it's a file, copy it directly to target directory with same name
         const fileName = path.basename(sourcePath);
+
         await fs.copy(sourcePath, path.join(targetFolder, fileName), {
             overwrite: true
         });
-    } else {
-        // If it's a directory, copy contents to target directory
-        await fs.copy(sourcePath, targetFolder, { overwrite: true });
-    }
+    } else await fs.copy(sourcePath, targetFolder, { overwrite: true });
 }
 
 async function listSubmodules() {
@@ -79,7 +75,7 @@ Command.execute(
         <Command
             name="download"
             parameters="<GitURL> [branchName] [folderOrFilePath]"
-            description="Download files/folders from a Git repository"
+            description="Download folders or files from a Git repository"
             executor={(
                 _,
                 GitURL: string,

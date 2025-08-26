@@ -15,7 +15,7 @@ npm i git-utility -g
 
 ## Usage
 
-### Download files/folders from Git repositories
+### Download folders or files from Git repositories
 
 ```shell
 # Download entire repository
@@ -24,8 +24,8 @@ xgit download https://github.com/your-org/your-repo
 # Download from specific branch
 xgit download https://github.com/your-org/your-repo main
 
-# Download specific folder
-xgit download https://github.com/your-org/your-repo main your-folder
+# Download specific folder or file
+xgit download https://github.com/your-org/your-repo main path/to/your-folder/or-file
 ```
 
 ### Manage Git submodules
@@ -40,7 +40,7 @@ xgit submodule remove path/to/submodule
 
 ## Commands
 
-- `xgit download <GitURL> [branchName] [folderPath]` - Download files/folders from a Git repository
+- `xgit download <GitURL> [branchName] [folderOrFilePath]` - Download folders or files from a Git repository
 - `xgit submodule remove [path]` - Remove a Git submodule
 
 [1]: https://git-scm.com/
