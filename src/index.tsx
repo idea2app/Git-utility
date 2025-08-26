@@ -3,6 +3,8 @@
 import { Command, createCommand } from 'commander-jsx';
 import { $, cd, fs, os, path } from 'zx';
 
+$.verbose = true;
+
 async function downloadGitFolder(
     GitURL: string,
     branchName?: string,
@@ -48,33 +50,28 @@ async function downloadGitFolder(
 }
 
 async function listSubmodules() {
-    const result = await $`git submodule status`;
-    console.log(`Current submodules:
-${result.stdout}
-Usage: xgit submodule remove <path>`);
+    await $`git submodule status`;
+
+    console.log('Usage: xgit submodule remove <path>');
 }
 
 async function removeSubmodule(submodulePath: string) {
-    console.log(`Removing submodule: ${submodulePath}`);
+    try {
+        await $`git config -f .gitmodules --remove-section submodule.${submodulePath}`;
+        await $`git config -f .git/config --remove-section submodule.${submodulePath}`;
+        await $`git add .gitmodules`;
+        await $`git rm --cached ${submodulePath}`;
+    } catch {}
 
-    // Remove submodule entry from .gitmodules
-    await $`git config --file .gitmodules --remove-section submodule.${submodulePath}`;
-
-    // Remove submodule entry from .git/config
-    await $`git config --remove-section submodule.${submodulePath}`;
-
-    // Remove from git index
-    await $`git rm --cached ${submodulePath}`;
-
-    // Remove the submodule directory
     await fs.remove(submodulePath);
+    await fs.remove(`.git/modules/${submodulePath}`);
 
-    // Stage .gitmodules changes
-    await $`git add .gitmodules`;
+    console.log(`
+Successfully removed submodule: ${submodulePath}
 
-    console.log(`Successfully removed submodule: ${submodulePath}
 Note: You may want to commit these changes with:
-  git commit -m "Remove submodule ${submodulePath}"`);
+
+    git commit -m "Remove submodule ${submodulePath}"`);
 }
 
 Command.execute(
@@ -88,7 +85,13 @@ Command.execute(
                 GitURL: string,
                 branchName = 'main',
                 folderOrFilePath?: string
-            ) => downloadGitFolder(GitURL, branchName as string, folderOrFilePath)}
+            ) =>
+                downloadGitFolder(
+                    GitURL,
+                    branchName as string,
+                    folderOrFilePath
+                )
+            }
         />
         <Command name="submodule" description="Manage Git submodules">
             <Command
@@ -96,7 +99,9 @@ Command.execute(
                 parameters="[path]"
                 description="Remove a Git submodule. If no path provided, lists current submodules."
                 executor={(_, submodulePath?: string) =>
-                    submodulePath ? removeSubmodule(submodulePath) : listSubmodules()
+                    submodulePath
+                        ? removeSubmodule(submodulePath)
+                        : listSubmodules()
                 }
             />
         </Command>

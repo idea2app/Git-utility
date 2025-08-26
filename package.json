@@ -26,14 +26,15 @@
     },
     "dependencies": {
         "commander-jsx": "^0.6.9",
-        "zx": "^7.2.3"
+        "zx": "^8.8.1"
     },
     "devDependencies": {
-        "@types/node": "^24.3.0",
-        "husky": "^8.0.3",
-        "lint-staged": "^14.0.0",
-        "prettier": "^3.0.2",
-        "typescript": "~5.1.6"
+        "@types/fs-extra": "^11.0.4",
+        "@types/node": "^22.18.0",
+        "husky": "^9.1.7",
+        "lint-staged": "^16.1.5",
+        "prettier": "^3.6.2",
+        "typescript": "~5.9.2"
     },
     "prettier": {
         "tabWidth": 4,
@@ -45,7 +46,7 @@
         "*.{md,json,yml,ts,tsx}": "prettier --write"
     },
     "scripts": {
-        "prepare": "husky install",
+        "prepare": "husky",
         "test": "lint-staged",
         "build": "rm -rf dist/  &&  tsc",
         "prepublishOnly": "npm test  &&  npm run build"
