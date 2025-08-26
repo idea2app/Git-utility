@@ -1,23 +1,24 @@
 {
     "name": "git-utility",
-    "version": "0.1.2",
+    "version": "0.2.0",
     "license": "LGPL-3.0",
     "author": "shiy2008@gmail.com",
     "description": "A Git utility CLI tool with file download and submodule management capabilities",
     "keywords": [
         "git",
         "utility",
+        "command",
         "cli",
         "download",
         "submodule"
     ],
-    "homepage": "https://github.com/idea2app/get-git-folder#readme",
+    "homepage": "https://github.com/idea2app/Git-utility#readme",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/idea2app/get-git-folder.git"
+        "url": "git+https://github.com/idea2app/Git-utility.git"
     },
     "bugs": {
-        "url": "https://github.com/idea2app/get-git-folder/issues"
+        "url": "https://github.com/idea2app/Git-utility/issues"
     },
     "type": "module",
     "bin": {
