@@ -6,7 +6,7 @@ import { $, cd, fs, os, path } from 'zx';
 async function downloadGitFolder(
     GitURL: string,
     branchName?: string,
-    folderPath?: string
+    folderOrFilePath?: string
 ) {
     const tempFolder = path.join(os.tmpdir(), new URL(GitURL).pathname),
         targetFolder = process.cwd();
@@ -15,11 +15,11 @@ async function downloadGitFolder(
     await fs.mkdirp(tempFolder);
     cd(tempFolder);
 
-    if (folderPath) {
+    if (folderOrFilePath) {
         await $`git init`;
         await $`git remote add origin ${GitURL}`;
         await $`git config core.sparseCheckout true`;
-        await $`echo ${folderPath} > .git/info/sparse-checkout`;
+        await $`echo ${folderOrFilePath} > .git/info/sparse-checkout`;
         await $`git pull origin ${branchName}`;
     } else {
         await $`git clone ${GitURL} .`;
@@ -28,8 +28,8 @@ async function downloadGitFolder(
 
     await fs.remove(path.join(tempFolder, '.git'));
 
-    const sourceFolder = folderPath
-        ? path.join(tempFolder, folderPath)
+    const sourceFolder = folderOrFilePath
+        ? path.join(tempFolder, folderOrFilePath)
         : tempFolder;
 
     // Check if source is a file or directory
@@ -81,14 +81,14 @@ Command.execute(
     <Command name="xgit">
         <Command
             name="download"
-            parameters="<GitURL> [branchName] [folderPath]"
+            parameters="<GitURL> [branchName] [folderOrFilePath]"
             description="Download files/folders from a Git repository"
             executor={(
                 _,
                 GitURL: string,
                 branchName = 'main',
-                folderPath?: string
-            ) => downloadGitFolder(GitURL, branchName as string, folderPath)}
+                folderOrFilePath?: string
+            ) => downloadGitFolder(GitURL, branchName as string, folderOrFilePath)}
         />
         <Command name="submodule" description="Manage Git submodules">
             <Command
