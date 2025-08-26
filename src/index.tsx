@@ -28,22 +28,22 @@ async function downloadGitFolder(
 
     await fs.remove(path.join(tempFolder, '.git'));
 
-    const sourceFolder = folderOrFilePath
+    const sourcePath = folderOrFilePath
         ? path.join(tempFolder, folderOrFilePath)
         : tempFolder;
 
     // Check if source is a file or directory
-    const sourceStat = await fs.stat(sourceFolder);
+    const sourceStat = await fs.stat(sourcePath);
 
     if (sourceStat.isFile()) {
         // If it's a file, copy it directly to target directory with same name
-        const fileName = path.basename(sourceFolder);
-        await fs.copy(sourceFolder, path.join(targetFolder, fileName), {
+        const fileName = path.basename(sourcePath);
+        await fs.copy(sourcePath, path.join(targetFolder, fileName), {
             overwrite: true
         });
     } else {
         // If it's a directory, copy contents to target directory
-        await fs.copy(sourceFolder, targetFolder, { overwrite: true });
+        await fs.copy(sourcePath, targetFolder, { overwrite: true });
     }
 }
 
