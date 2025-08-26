@@ -3,7 +3,7 @@
     "version": "0.2.0",
     "license": "LGPL-3.0",
     "author": "shiy2008@gmail.com",
-    "description": "A Git utility CLI tool with file download and submodule management capabilities",
+    "description": "A Git utility CLI tool with some missing sub commands",
     "keywords": [
         "git",
         "utility",
@@ -29,6 +29,7 @@
         "zx": "^7.2.3"
     },
     "devDependencies": {
+        "@types/node": "^24.3.0",
         "husky": "^8.0.3",
         "lint-staged": "^14.0.0",
         "prettier": "^3.0.2",

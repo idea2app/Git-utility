@@ -54,31 +54,14 @@ ${result.stdout}
 Usage: xgit submodule remove <path>`);
 }
 
-async function removeSubmodule(submodulePath?: string) {
-    if (!submodulePath) {
-        await listSubmodules();
-        return;
-    }
-
+async function removeSubmodule(submodulePath: string) {
     console.log(`Removing submodule: ${submodulePath}`);
 
-    // Remove submodule entry from .gitmodules (if .gitmodules exists)
-    try {
-        await $`git config --file .gitmodules --remove-section submodule.${submodulePath}`;
-    } catch (error) {
-        console.warn(
-            `Warning: Could not remove from .gitmodules (file may not exist or section not found)`
-        );
-    }
+    // Remove submodule entry from .gitmodules
+    await $`git config --file .gitmodules --remove-section submodule.${submodulePath}`;
 
     // Remove submodule entry from .git/config
-    try {
-        await $`git config --remove-section submodule.${submodulePath}`;
-    } catch (error) {
-        console.warn(
-            `Warning: Could not remove from .git/config (section may not exist)`
-        );
-    }
+    await $`git config --remove-section submodule.${submodulePath}`;
 
     // Remove from git index
     await $`git rm --cached ${submodulePath}`;
@@ -89,9 +72,9 @@ async function removeSubmodule(submodulePath?: string) {
     // Stage .gitmodules changes
     await $`git add .gitmodules`;
 
-    console.log(`Successfully removed submodule: ${submodulePath}`);
-    console.log('Note: You may want to commit these changes with:');
-    console.log(`  git commit -m "Remove submodule ${submodulePath}"`);
+    console.log(`Successfully removed submodule: ${submodulePath}
+Note: You may want to commit these changes with:
+  git commit -m "Remove submodule ${submodulePath}"`);
 }
 
 Command.execute(
@@ -113,7 +96,7 @@ Command.execute(
                 parameters="[path]"
                 description="Remove a Git submodule. If no path provided, lists current submodules."
                 executor={(_, submodulePath?: string) =>
-                    removeSubmodule(submodulePath)
+                    submodulePath ? removeSubmodule(submodulePath) : listSubmodules()
                 }
             />
         </Command>
