@@ -22,6 +22,7 @@
     },
     "type": "module",
     "bin": {
+        "git-utility": "dist/index.js",
         "xgit": "dist/index.js"
     },
     "dependencies": {

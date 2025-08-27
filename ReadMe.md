@@ -13,6 +13,12 @@ A **Git utility CLI tool** with some missing sub commands
 npm i git-utility -g
 ```
 
+or run with `npx` / `pnpx` directly:
+
+```shell
+npx git-utility # your arguments here
+```
+
 ## Usage
 
 ### Download folders or files from Git repositories
