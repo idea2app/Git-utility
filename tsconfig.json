@@ -4,6 +4,7 @@
         "target": "ES2017",
         "jsx": "react",
         "jsxFactory": "createCommand",
+        "skipLibCheck": true,
         "outDir": "dist/"
     },
     "include": ["src/*"]
