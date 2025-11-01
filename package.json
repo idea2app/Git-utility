@@ -1,6 +1,6 @@
 {
     "name": "git-utility",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "license": "LGPL-3.0",
     "author": "shiy2008@gmail.com",
     "description": "A Git utility CLI tool with some missing sub commands",
@@ -20,22 +20,21 @@
     "bugs": {
         "url": "https://github.com/idea2app/Git-utility/issues"
     },
-    "type": "module",
     "bin": {
         "git-utility": "dist/index.js",
         "xgit": "dist/index.js"
     },
     "dependencies": {
-        "commander-jsx": "^0.6.9",
-        "zx": "^8.8.1"
+        "commander-jsx": "^0.7.1",
+        "zx": "^8.8.5"
     },
     "devDependencies": {
         "@types/fs-extra": "^11.0.4",
-        "@types/node": "^22.18.0",
+        "@types/node": "^22.18.13",
         "husky": "^9.1.7",
-        "lint-staged": "^16.1.5",
+        "lint-staged": "^16.2.6",
         "prettier": "^3.6.2",
-        "typescript": "~5.9.2"
+        "typescript": "~5.9.3"
     },
     "prettier": {
         "tabWidth": 4,

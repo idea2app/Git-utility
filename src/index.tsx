@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-import { Command, createCommand } from 'commander-jsx';
+import { Command } from 'commander-jsx';
 import { $, cd, fs, os, path } from 'zx';
 
 $.verbose = true;
